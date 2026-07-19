@@ -5,7 +5,7 @@
 
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![LangChain](https://img.shields.io/badge/LangChain-LCEL-green?style=for-the-badge&logo=langchain&logoColor=white)](https://python.langchain.com/)
-[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-1.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://aistudio.google.com/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-3.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://aistudio.google.com/)
 [![FAISS](https://img.shields.io/badge/FAISS-Vector%20DB-red?style=for-the-badge&logo=facebook&logoColor=white)](https://github.com/facebookresearch/faiss)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Embeddings-ff9d00?style=for-the-badge&logo=huggingface&logoColor=white)](https://huggingface.co/)
 
