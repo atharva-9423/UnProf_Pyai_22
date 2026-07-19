@@ -50,9 +50,7 @@ UnProf_Pyai_22/
 ## 🚀 Setup & Usage
 
 ### 1. Install Dependencies
-Navigate to the `day22` folder and install dependencies:
 ```bash
-cd day22
 pip install -U -r requirements.txt
 ```
 
