@@ -1,7 +1,6 @@
 import os
 import sys
 
-# Suppress HuggingFace and warning messages
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import warnings
 warnings.filterwarnings("ignore")
@@ -52,16 +51,11 @@ def main():
         print("Example: $env:GEMINI_API_KEY=\"your_api_key\"\n")
         sys.exit(1)
 
-    # Chat model
     llm = ChatGoogleGenerativeAI(
         model="gemini-3.5-flash", 
         google_api_key=os.environ["GEMINI_API_KEY"]
     )
 
-    # 1. Fast Contextualizer (Eliminates slow LLM call)
-    # Instead of asking the LLM to rewrite the query (which takes 3-5 seconds),
-    # we use a lightning-fast heuristic: combine the last user question with the current one
-    # to provide FAISS enough context for follow-ups!
     def get_contextualized_question(inputs):
         history = inputs.get("chat_history", [])
         if not history:
@@ -73,11 +67,8 @@ def main():
                 last_human_query = text
                 break
                 
-        # E.g., "What is AI?" + "When was it created?"
         return f"{last_human_query} {inputs['input']}"
 
-    # 2. QA Prompt
-    # This prompt takes the actual context and the original question
     qa_system_prompt = (
         "You are an assistant for question-answering tasks. "
         "Use the following pieces of retrieved context to answer the question. "
@@ -92,7 +83,6 @@ def main():
         ("human", "{input}"),
     ])
 
-    # 3. Full RAG Chain (Single LLM call, Streams instantly)
     rag_chain = (
         RunnablePassthrough.assign(
             standalone_question=get_contextualized_question
@@ -105,7 +95,6 @@ def main():
         | StrOutputParser()
     )
 
-    # Chat history state
     chat_history = []
 
     print("\nAsk a question about the documents (type 'exit' to quit).\n")
@@ -125,7 +114,6 @@ def main():
         try:
             print("\n--- Answer ---")
             full_answer = ""
-            # Stream the response chunk by chunk
             for chunk in rag_chain.stream({
                 "input": query,
                 "chat_history": chat_history
@@ -135,7 +123,6 @@ def main():
                 
             print("\n" + "-" * 60 + "\n")
             
-            # Update history for next turn
             chat_history.append(("human", query))
             chat_history.append(("ai", full_answer))
 
